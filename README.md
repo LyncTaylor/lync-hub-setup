@@ -31,8 +31,9 @@ The sample configuration is set up to use a Coral USB accelerator for detections
 Clips and recordings are stored under `/opt/lync-hub/frigate/media`.
 Update the `FRIGATE_RTSP_PASSWORD` environment variable in the compose file with
 your RTSP password before starting the stack.
-Frigate exposes ports `8971`, `5000`, `8554`, and `8555` for its web interface,
-RTSP, and WebRTC services.
+Frigate now uses host networking. Its web interface is available on port `5000`
+of the host and the service also listens on ports `8971`, `8554`, and `8555` for
+RTSP and WebRTC.
 
 Home Assistant's configuration will be stored under `/opt/lync-hub/homeassistant/config`.
 Home Assistant uses host networking and runs with `privileged` mode enabled for
