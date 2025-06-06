@@ -25,8 +25,13 @@ services:
   homeassistant:
     image: ghcr.io/home-assistant/home-assistant:stable
     container_name: homeassistant
+    privileged: true
+    network_mode: host
+    environment:
+      TZ: "UTC"
     volumes:
       - ./homeassistant/config:/config
+      - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
 
   mqtt:

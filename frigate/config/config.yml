@@ -2,4 +2,8 @@ mqtt:
   host: mqtt
   user: username
   password: password
+detectors:
+  coral:
+    type: edgetpu
+    device: usb
 cameras: {}
