@@ -36,3 +36,4 @@ Home Assistant's configuration will be stored under `/opt/lync-hub/homeassistant
 The container uses host networking and runs with `privileged` mode enabled for
 hardware access. Set the `TZ` environment variable in the compose file to your
 timezone before starting the stack.
+
