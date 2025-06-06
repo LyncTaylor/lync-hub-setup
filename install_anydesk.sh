@@ -1,3 +1,6 @@
+# paste the curl command below into terminal
+# curl -sSL https://raw.githubusercontent.com/LyncTaylor/lync-hub-setup/main/install_anydesk.sh | sudo bash
+
 #!/usr/bin/env bash
 set -euo pipefail
 
