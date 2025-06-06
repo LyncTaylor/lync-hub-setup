@@ -25,3 +25,8 @@ After the script finishes you can start the services with:
 ```bash
 docker compose -f /opt/lync-hub/docker-compose.yml up -d
 ```
+
+The compose file expects a Frigate configuration in `frigate/config/config.yml`
+and stores clips and recordings under `/opt/lync-hub/frigate/media`. Update the
+`FRIGATE_RTSP_PASSWORD` environment variable in the compose file with your RTSP
+password before starting the stack.
