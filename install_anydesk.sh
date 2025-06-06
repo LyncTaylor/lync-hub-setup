@@ -36,8 +36,10 @@ fi
 
 # Set unattended access password
 echo
-read -s -p "Set AnyDesk unattended access password: " AD_PASS; echo
-read -s -p "Confirm password: " AD_PASS_CONFIRM; echo
+read -s -p "Set AnyDesk unattended access password: " AD_PASS < /dev/tty
+echo
+read -s -p "Confirm password: " AD_PASS_CONFIRM < /dev/tty
+echo
 
 if [[ "$AD_PASS" != "$AD_PASS_CONFIRM" ]]; then
   echo "❌ Passwords do not match."
