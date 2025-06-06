@@ -9,8 +9,11 @@ To install AnyDesk on a Lync hub in one step, run the following command:
 curl -sSL https://raw.githubusercontent.com/LyncTaylor/lync-hub-setup/main/install_anydesk.sh | sudo bash -i
 ```
 
-This script installs AnyDesk, prompts you to set an unattended access password,
-and reboots the system to apply the changes.
+This script installs AnyDesk and configures an unattended access password.
+Set the `ANYDESK_PASSWORD` environment variable before running the command to
+use a pre-defined password without any prompts. If the variable is unset, you
+will be asked to enter the password interactively. After installation the system
+reboots to apply the changes.
 
 ## Installing Docker and base services
 
