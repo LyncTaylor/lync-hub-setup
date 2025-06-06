@@ -16,7 +16,6 @@ services:
       FRIGATE_RTSP_PASSWORD: "changeme"
     devices:
       - /dev/bus/usb:/dev/bus/usb
-      - /dev/dri/renderD128:/dev/dri/renderD128
     volumes:
       - ./frigate/config:/config
       - /opt/lync-hub/frigate/media:/media/frigate
