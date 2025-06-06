@@ -1,5 +1,6 @@
 # Run this command to execute this script from GitHub:
-# curl -sSL https://raw.githubusercontent.com/LyncTaylor/lync-hub-setup/main/install_anydesk.sh | sudo bash
+# curl -sSL https://raw.githubusercontent.com/LyncTaylor/lync-hub-setup/main/install_anydesk.sh | sudo bash -i
+
 
 #!/usr/bin/env bash
 
