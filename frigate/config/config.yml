@@ -1,9 +1,149 @@
 mqtt:
   host: mqtt
-  user: username
-  password: password
+  port: 1883
+  user: MQTT_USERNAME
+  password: MQTT_PASSWORD
+
 detectors:
   coral:
     type: edgetpu
     device: usb
-cameras: {}
+
+semantic_search:
+  enabled: true
+  reindex: false
+
+record:
+  enabled: true
+  retain:
+    days: 3
+    mode: all
+  alerts:
+    retain:
+      days: 14
+  detections:
+    retain:
+      days: 14
+snapshots:
+  enabled: true
+  # Optional: Camera override for retention settings (default: global values)
+  retain:
+    # Required: Default retention days
+    default: 7
+    # Optional: Per object retention days
+    objects:
+      person: 14
+      car: 14
+
+objects:
+  track:
+    - person
+  filters:
+    dog:
+      min_score: .7
+      threshold: .9
+    cat:
+      min_score: .65
+      threshold: .8
+    face:
+      min_score: .7
+    package:
+      min_score: .65
+      threshold: .9
+    license_plate:
+      min_score: .6
+    amazon:
+      min_score: .75
+    ups:
+      min_score: .75
+    fedex:
+      min_score: .75
+    person:
+      min_score: .65
+      threshold: .85
+    car:
+      min_score: .65
+      threshold: .85
+
+ffmpeg:
+ # output_args:
+ #   record: -f segment -segment_time 10 -segment_format mp4 -reset_timestamps 1 -strftime 1 -c copy
+ # hwaccel_args: -c:v h264_qsv
+ # hwaccel_args: preset-vaapi
+  hwaccel_args: preset-intel-qsv-h264
+
+# Optional: birdseye configuration
+# NOTE: Can (enabled, mode) be overridden at the camera level
+birdseye:
+  # Optional: Enable birdseye view (default: shown below)
+  enabled: true
+  # Optional: Restream birdseye via RTSP (default: shown below)
+  # NOTE: Enabling this will set birdseye to run 24/7 which may increase CPU usage somewhat.
+  restream: true
+  # Optional: Width of the output resolution (default: shown below)
+  width: 800
+  # Optional: Height of the output resolution (default: shown below)
+  height: 600
+  # Optional: Encoding quality of the mpeg1 feed (default: shown below)
+  # 1 is the highest quality, and 31 is the lowest. Lower quality feeds utilize less CPU resources.
+  quality: 8
+  # Optional: Mode of the view. Available options are: objects, motion, and continuous
+  #   objects - cameras are included if they have had a tracked object within the last 30 seconds
+  #   motion - cameras are included if motion was detected in the last 30 seconds
+  #   continuous - all cameras are included always
+  mode: objects
+
+#audio:
+#  enabled: True
+#  listen:
+#    - bark
+#    - fire_alarm
+#    - scream
+#    - speech
+#    - yell
+
+go2rtc:
+  streams:
+    Cam1:
+      - rtsp://CAMERAUSER:CAMERAPASSWORD@IP_ADDRESS:554/cam/realmonitor?channel=1&subtype=0
+      - ffmpeg:Cam1#audio=opus   # <- copy of the stream which transcodes audio to opus
+    Cam1_sub:
+      - rtsp://CAMERAUSER:CAMERAPASSWORD@IP_ADDRESS:554/cam/realmonitor?channel=1&subtype=2
+      - ffmpeg:Cam1_sub#audio=opus   # <- copy of the stream which transcodes audio to opus
+
+cameras:
+  Driveway:
+    enabled: true
+    ffmpeg:
+      output_args:
+        record: preset-record-generic-audio-copy
+      inputs:
+        - path: rtsp://localhost:8554/Cam1 # <--- the name here must match the name of the camera in restream
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://localhost:8554/Cam1_sub # <--- the name here must match the name of the
+    audio:
+      enabled: true
+    live:
+      stream_name: Cam1_sub
+    birdseye:
+      enabled: true
+      mode: continuous
+    detect:
+      width: 1920
+      height: 1080
+    objects:
+      track:
+        - person
+        - car
+        - cat
+        - dog
+        - license_plate
+        - package
+        - amazon
+        - fedex
+        - ups
+        objects:
+          - person
+          - car
