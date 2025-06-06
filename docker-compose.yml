@@ -1,13 +1,25 @@
 version: "3.9"
 services:
   frigate:
-    image: blakeblackshear/frigate:stable
+    image: ghcr.io/blakeblackshear/frigate:stable
     container_name: frigate
     privileged: true
+    network_mode: host
+    shm_size: "64mb"
+    environment:
+      TZ: "UTC"
+      FRIGATE_RTSP_PASSWORD: "changeme"
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+      - /dev/dri/renderD128:/dev/dri/renderD128
     volumes:
       - ./frigate/config:/config
+      - /opt/lync-hub/frigate/media:/media/frigate
       - /etc/localtime:/etc/localtime:ro
-      - /dev/bus/usb:/dev/bus/usb
+      - type: tmpfs
+        target: /tmp/cache
+        tmpfs:
+          size: 256m
     restart: unless-stopped
 
   homeassistant:

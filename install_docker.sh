@@ -29,8 +29,14 @@ systemctl start docker
 
 usermod -aG docker ${SUDO_USER:-$USER}
 
-mkdir -p /opt/lync-hub
+mkdir -p /opt/lync-hub/frigate/media \
+         /opt/lync-hub/frigate/config \
+         /opt/lync-hub/homeassistant/config \
+         /opt/lync-hub/mosquitto/data \
+         /opt/lync-hub/mosquitto/config
+
 curl -fsSL https://raw.githubusercontent.com/LyncTaylor/lync-hub-setup/main/docker-compose.yml -o /opt/lync-hub/docker-compose.yml
+curl -fsSL https://raw.githubusercontent.com/LyncTaylor/lync-hub-setup/main/frigate/config/config.yml -o /opt/lync-hub/frigate/config/config.yml
 
 echo "✅ Docker installed. Compose file saved to /opt/lync-hub/docker-compose.yml"
 echo "Run 'docker compose -f /opt/lync-hub/docker-compose.yml up -d' to start services."
