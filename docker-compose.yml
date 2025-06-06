@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  frigate:
+    image: blakeblackshear/frigate:stable
+    container_name: frigate
+    privileged: true
+    volumes:
+      - ./frigate/config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/bus/usb:/dev/bus/usb
+    restart: unless-stopped
+
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    volumes:
+      - ./homeassistant/config:/config
+    restart: unless-stopped
+
+  mqtt:
+    image: eclipse-mosquitto:latest
+    container_name: mqtt
+    volumes:
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/config:/mosquitto/config
+    restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    command: tunnel run
+    restart: unless-stopped
+
+  watchdog:
+    image: containrrr/watchtower:latest
+    container_name: watchdog
+    command: --cleanup --interval 300
+    restart: unless-stopped
