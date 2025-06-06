@@ -3,6 +3,8 @@
 
 
 #!/usr/bin/env bash
+# Exit on errors, unset variables, or failed pipeline commands
+set -euo pipefail
 
 echo "🔧 Installing AnyDesk on Lync Hub..."
 
