@@ -42,9 +42,4 @@ services:
       - ./mosquitto/config:/mosquitto/config
     restart: unless-stopped
 
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    container_name: cloudflared
-    command: tunnel run
-    restart: unless-stopped
 
