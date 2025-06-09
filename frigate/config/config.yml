@@ -112,7 +112,7 @@ go2rtc:
       - ffmpeg:Cam1_sub#audio=opus   # <- copy of the stream which transcodes audio to opus
 
 cameras:
-  Driveway:
+  Cam1:
     enabled: true
     ffmpeg:
       output_args:
